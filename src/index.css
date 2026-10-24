@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ============================================================
+   COLORES Y FUENTES DEL FIGMA
+   ============================================================ */
+@theme {
+  --color-sena-oscuro: #014011;  /* Encabezado, títulos y bordes */
+  --color-sena-verde: #025918;   /* Botones principales */
+  --color-sena-fondo: #9FBFAA;   /* Fondo de la página */
+  --color-sena-beige: #F5F5DC;   /* Tarjetas */
+
+  --font-titulo: "Montserrat", sans-serif;    /* Títulos y botones */
+  --font-texto: "Josefin Sans", sans-serif;   /* Textos y datos */
+}
+
+/* ============================================================
+   ESTILOS GENERALES
+   ============================================================ */
+@layer base {
+  body {
+    @apply bg-sena-fondo font-texto text-gray-800;
+  }
+}
+
+/* ============================================================
+   CLASES PROPIAS
+   Se usan en todas las pantallas para no repetir lo mismo.
+   ============================================================ */
+@layer components {
+
+  /* ----- Tarjeta beige (cada sección de una pantalla) ----- */
+  .tarjeta {
+    @apply bg-sena-beige rounded-xl shadow-lg p-6;
+  }
+
+  /* ----- Títulos ----- */
+  .titulo {
+    @apply font-titulo font-bold text-sena-oscuro;
+  }
+
+  /* ----- Botones ----- */
+  .btn-verde,
+  .btn-gris,
+  .btn-rojo {
+    @apply py-3 rounded-lg text-white font-titulo font-bold transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-verde { @apply bg-sena-verde hover:bg-sena-oscuro; }
+  .btn-gris  { @apply bg-gray-400 hover:bg-gray-500; }
+  .btn-rojo  { @apply bg-red-600 hover:bg-red-700; }
+
+  /* ----- Campos de formulario ----- */
+  .etiqueta {
+    @apply block mb-2 font-titulo font-bold text-sena-oscuro;
+  }
+  .campo {
+    @apply w-full bg-white border-2 border-sena-oscuro rounded-lg px-4 py-3 font-texto focus:outline-none focus:ring-2 focus:ring-sena-verde;
+  }
+  /* Buscador pequeño que va dentro del encabezado de una tabla */
+  .buscador {
+    @apply pl-7 pr-2 py-1 border border-sena-verde rounded text-sm bg-white font-texto focus:outline-none focus:ring-1 focus:ring-sena-verde;
+  }
+
+  /* ----- Tablas ----- */
+  .tabla {
+    @apply w-full;
+  }
+  .tabla thead tr {
+    @apply border-b-2 border-sena-oscuro;
+  }
+  .tabla th {
+    @apply text-left py-3 px-4 font-titulo font-bold text-sena-oscuro;
+  }
+  .tabla td {
+    @apply py-3 px-4 border-b border-gray-300;
+  }
+  .tabla tbody tr {
+    @apply hover:bg-white transition-colors;
+  }
+  /* Tabla con encabezado verde (las del panel administrativo) */
+  .tabla-verde thead {
+    @apply bg-sena-verde;
+  }
+  .tabla-verde th {
+    @apply text-white font-normal;
+  }
+  .tabla-verde tbody {
+    @apply bg-white;
+  }
+  .tabla-verde tbody tr {
+    @apply hover:bg-sena-fondo;
+  }
+
+  /* ----- Etiqueta redonda verde (cantidades, estados) ----- */
+  .pastilla {
+    @apply px-3 py-1 bg-sena-verde text-white rounded-full text-sm;
+  }
+
+  /* ----- Casilla para seleccionar (cuadrito con chulito) ----- */
+  .casilla {
+    @apply w-8 h-8 mx-auto rounded border-2 flex items-center justify-center transition-colors cursor-pointer;
+  }
+}
+
+/* ============================================================
+   IMPRESIÓN (botones "Exportar PDF" e "Imprimir")
+   Solo se imprime lo que esté dentro de la clase "zona-imprimir".
+   ============================================================ */
+@media print {
+  body * { visibility: hidden; }
+  .zona-imprimir, .zona-imprimir * { visibility: visible; }
+  .zona-imprimir {
+    position: absolute; left: 0; top: 0; width: 100%;
+    max-height: none !important; overflow: visible !important;
+  }
+  .no-imprimir { display: none !important; }
+}
